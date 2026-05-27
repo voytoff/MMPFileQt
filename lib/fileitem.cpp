@@ -20,9 +20,6 @@ File *FileItem::file() {
   return _file;
 }
 
-void FileItem::loadInfo() {
-} // loadInfo
-
 void FileItem::loadData() {
 } // loadData
 

@@ -23,7 +23,7 @@ add_library(MMPFile SHARED
   datablock.h datablock.cpp
   datablockarray.h datablockarray.cpp
   parameter.h parameter.cpp
-
+  lib.h lib.cpp
 )
 
 target_link_libraries(MMPFile PRIVATE Qt${QT_VERSION_MAJOR}::Core)

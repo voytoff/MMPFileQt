@@ -19,6 +19,6 @@ qt_add_executable(tst_MMPFile
 #    WIN32_EXECUTABLE FALSE
 #)
 
-target_link_libraries(tst_MMPFile PRIVATE Qt6::Test MMPTest)
+target_link_libraries(tst_MMPFile PRIVATE Qt6::Test MMPFile)
 
 add_test(NAME MMPTest COMMAND MMPTest)

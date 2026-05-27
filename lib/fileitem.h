@@ -53,9 +53,10 @@ private:
 public slots:
   /**
    * Загружает заголовки файла
+   * У MMP файлов заголовков нет, пропускаем этот этап
    * @brief loadInfo
    */
-  void loadInfo();
+  //void loadInfo();
 
   /**
    * Загружает данные файла

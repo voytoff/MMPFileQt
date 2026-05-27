@@ -10,7 +10,38 @@ class MMPFILE_EXPORT ChannelBlock : public QObject
 {
   Q_OBJECT
 public:
-  explicit ChannelBlock(QObject *parent = nullptr);
+  ChannelBlock(QObject *parent = nullptr);
+
+  bool operator==(const ChannelBlock &other) const {
+    return channelID == other.channelID && name == other.name;
+  }
+  bool operator<(const ChannelBlock &other) const {
+    return channelID < other.channelID;
+  }
+
+  /**
+   * Числовой идентификатор канала в файле, должен быть уникальным для каждого канала.
+   * @brief channelID
+   */
+  int channelID;
+
+  /**
+   * Номер канала в блоке данных
+   * @brief blockID
+   */
+  int blockID;
+
+  /**
+   * Имя канала
+   * @brief name
+   */
+  QString name;
+
+  /**
+   * Единица измерения
+   * @brief unit
+   */
+  QString unit;
 
   /**
    * Массив считанных блоков данных, соответствующих этому каналу

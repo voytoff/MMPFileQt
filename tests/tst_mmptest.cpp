@@ -11,7 +11,7 @@ class MMPTest : public QObject {
   ~MMPTest() override;
 
 private:
-  QString path = "D:/Телеметрия/Files";
+  QString path = "D:/Телеметрия/MMP тестовые";
   QVector<QString> getFiles(const QString &path);
 
   private slots:
@@ -26,7 +26,7 @@ void MMPTest::test_case1() {
   QList<QString> temp(this->getFiles(path));
   QList<QString> files;
 
-  files.append(temp.first());
+  files.append(temp);
 
   MMPObject *acdo = new MMPObject(files, this);
   connect(acdo, &MMPObject::fileLoaded, this, [=](int index, QString fileName) { qDebug() << index << fileName; });
@@ -44,7 +44,7 @@ void MMPTest::test_case1() {
 
 QVector<QString> MMPTest::getFiles(const QString &path) {
   QVector<QString> result;
-  QDirIterator it(path, QStringList() << "*.acd", QDir::Files, QDirIterator::Subdirectories);
+  QDirIterator it(path, QStringList() << Pattern << Pattern_info, QDir::Files, QDirIterator::Subdirectories);
   while (it.hasNext())
     result.append(it.next());
   return result;

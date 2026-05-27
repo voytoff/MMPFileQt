@@ -14,6 +14,9 @@ public:
   explicit MMPObject(QObject *parent = nullptr);
   explicit MMPObject(QStringList fileNames, QObject *parent = nullptr);
 
+  QString parentDir;
+  QString infoFileName;
+
   /**
    * Массив файлов обработки acd2
    * @brief files
@@ -45,6 +48,8 @@ public:
   bool containsChannel (QString name);
 
 public slots:
+  void loadBlockArray(QStringList mmpFiles);
+  FileItem *appendFile(QString fileName);
   void load();
   void close();
 
