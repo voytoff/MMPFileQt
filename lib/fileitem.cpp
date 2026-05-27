@@ -21,5 +21,11 @@ File *FileItem::file() {
 }
 
 void FileItem::loadData() {
+  // 1. 64 байта заголовок
+  blockHeader = file()->get<QString>(64);
+  blockLength = file()->get<int>(4);
+  frequency = file()->get<int>(4);
+  if (deferred) filePosition = file()->pos();
+  else payload = file()->readAll();
 } // loadData
 

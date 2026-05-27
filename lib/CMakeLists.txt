@@ -20,10 +20,11 @@ add_library(MMPFile SHARED
   channelarray.h channelarray.cpp
   channelblock.h channelblock.cpp
   file.h file.cpp
-  datablock.h datablock.cpp
+
   datablockarray.h datablockarray.cpp
   parameter.h parameter.cpp
   lib.h lib.cpp
+  datablock.h datablock.cpp
 )
 
 target_link_libraries(MMPFile PRIVATE Qt${QT_VERSION_MAJOR}::Core)

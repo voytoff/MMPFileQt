@@ -6,6 +6,7 @@
 #include "parameter.h"
 #include <QObject>
 
+class FileItem;
 class MMPFILE_EXPORT ChannelBlock : public QObject
 {
   Q_OBJECT
@@ -48,6 +49,8 @@ public:
    * @brief dataBlockArray
    */
   QList<DataBlock*>* dataBlockArray;
+
+  FileItem *fileItem;
 
   /**
    * Массив с данными этого канала. Формируется из данных всех блоков

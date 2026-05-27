@@ -48,7 +48,7 @@ public:
   bool containsChannel (QString name);
 
 public slots:
-  void loadBlockArray(QStringList mmpFiles);
+  void loadCore(QStringList mmpFiles);
   FileItem *appendFile(QString fileName);
   void load();
   void close();

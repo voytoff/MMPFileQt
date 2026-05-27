@@ -13,6 +13,26 @@ public:
   explicit FileItem(ChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
   explicit FileItem(QString fileName, int index, ChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
 
+  QString blockHeader;
+
+  /**
+   * Количество параметров в блоке файла
+   * @brief blockLength
+   */
+  int blockLength;
+
+  /**
+   * Частота дискретизации данных в блоке Гц
+   * @brief frequency
+   */
+  double frequency;
+
+  /**
+   * Указатель на данные в файле
+   * @brief filePosition
+   */
+  long filePosition;
+
   /**
    * Номер файла в списке
    * @brief index
@@ -26,6 +46,12 @@ public:
    * @brief deferred
    */
   bool deferred;
+
+  /**
+   * Данные как есть в файле без преобразований
+   * @brief payload
+   */
+  QByteArray payload;
 
   /**
    * Массив блоков информации по каналам. Пробрасывается в FileItem для загрузки данных из файлов

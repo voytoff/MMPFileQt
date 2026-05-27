@@ -33,6 +33,7 @@ void MMPTest::test_case1() {
   acdo->load();
   qDebug() << acdo->channels->count() << "каналов";
   foreach (auto channel, *acdo->channels) {
+    qDebug() << channel->name << channel->channelID;
     //for (DataBlock* db : *channel->dataBlockArray) { qDebug() << db->channel->name << db->blockID; }
     //std::sort(channel->data().begin(), channel->data().end());
     foreach (Parameter *p, channel->data()) {

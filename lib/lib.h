@@ -7,7 +7,7 @@
 #include <QList>
 
 namespace lib {
-bool endsWith(QStringList list, QString value);
+int endsWith(QStringList list, QString value);
 int indexOf(QList<FileItem*> list, QString fileName);
 };
 
