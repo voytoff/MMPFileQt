@@ -2,12 +2,12 @@
 
 FileItem::FileItem(QObject *parent) : QObject{parent} {}
 
-FileItem::FileItem(ChannelArray *channelBlockArray, bool deferred, QObject *parent)
+FileItem::FileItem(MChannelArray *channelBlockArray, bool deferred, QObject *parent)
   : QObject{parent}
   , channelBlockArray(channelBlockArray)
   , deferred(deferred) {}
 
-FileItem::FileItem(QString fileName, int index, ChannelArray* channelBlockArray, bool deferred, QObject *parent)
+FileItem::FileItem(QString fileName, int index, MChannelArray* channelBlockArray, bool deferred, QObject *parent)
   : QObject{parent}
   , channelBlockArray(channelBlockArray)
   , deferred(deferred)

@@ -10,9 +10,9 @@
 #define MMPFILE_EXPORT Q_DECL_IMPORT
 #endif
 
-const QString Ext = ".mmp";
-const QString Pattern = "*.mmp";
-const QString Ext_info = ".prm";
-const QString Pattern_info = "*.prm";
+const QString ext_mmp = ".mmp";
+const QString pattern_mmp = "*.mmp";
+const QString ext_prm = ".prm";
+const QString pattern_prm = "*.prm";
 
 #endif // MMPFILE_GLOBAL_H

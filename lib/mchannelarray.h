@@ -1,15 +1,15 @@
-#ifndef CHANNELARRAY_H
-#define CHANNELARRAY_H
+#ifndef MCHANNELARRAY_H
+#define MCHANNELARRAY_H
 
 #include "MMPFile_global.h"
-#include "channelblock.h"
+#include "mchannelblock.h"
 #include <QHash>
 #include <QList>
 
-class MMPFILE_EXPORT ChannelArray: public QHash<int, ChannelBlock*>
+class MMPFILE_EXPORT MChannelArray: public QHash<int, MChannelBlock*>
 {
 public:
-  ChannelArray();
+  MChannelArray();
 
   qsizetype count();
 
@@ -19,7 +19,7 @@ public:
    * @param predicate
    * @return
    */
-  ChannelBlock* get(std::function<bool(const ChannelBlock&)> &predicate);
+  MChannelBlock* get(std::function<bool(const MChannelBlock&)> &predicate);
 
   /**
    * Возвращает канальный блок по указанному имени
@@ -27,10 +27,10 @@ public:
    * @param name
    * @return
    */
-  ChannelBlock* operator[](QString name);
+  MChannelBlock* operator[](QString name);
 
-  ChannelBlock *addChannel(ChannelBlock *channel);
+  MChannelBlock *addChannel(MChannelBlock *channel);
 
 };
 
-#endif // CHANNELARRAY_H
+#endif // MCHANNELARRAY_H

@@ -1,22 +1,25 @@
-#ifndef CHANNELBLOCK_H
-#define CHANNELBLOCK_H
+#ifndef MCHANNELBLOCK_H
+#define MCHANNELBLOCK_H
 
 #include "MMPFile_global.h"
 #include "datablock.h"
+#include "datablockarray.h"
 #include "parameter.h"
 #include <QObject>
+#include <QHash>
+#include <QList>
 
 class FileItem;
-class MMPFILE_EXPORT ChannelBlock : public QObject
+class MMPFILE_EXPORT MChannelBlock : public QObject
 {
   Q_OBJECT
 public:
-  ChannelBlock(QObject *parent = nullptr);
+  MChannelBlock(QObject *parent = nullptr);
 
-  bool operator==(const ChannelBlock &other) const {
+  bool operator==(const MChannelBlock &other) const {
     return channelID == other.channelID && name == other.name;
   }
-  bool operator<(const ChannelBlock &other) const {
+  bool operator<(const MChannelBlock &other) const {
     return channelID < other.channelID;
   }
 
@@ -44,6 +47,8 @@ public:
    */
   QString unit;
 
+  double frequency;
+
   /**
    * Массив считанных блоков данных, соответствующих этому каналу
    * @brief dataBlockArray
@@ -52,14 +57,17 @@ public:
 
   FileItem *fileItem;
 
+  DataBlockArray* array(int persecond);
+//private:
   /**
    * Массив с данными этого канала. Формируется из данных всех блоков
    * @brief data
    * @return
    */
   QList<Parameter*> data();
+  QHash<int, DataBlockArray*> finalData;
 
 signals:
 };
 
-#endif // CHANNELBLOCK_H
+#endif // MCHANNELBLOCK_H

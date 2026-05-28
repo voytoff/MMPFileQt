@@ -1,15 +1,17 @@
 #ifndef MMPOBJECT_H
 #define MMPOBJECT_H
 
-#include "channelarray.h"
+#include "MMPFile_global.h"
+#include "mchannelarray.h"
 #include "fileitem.h"
+
 #include <QObject>
 #include <QList>
 #include <QString>
 
-class MMPFILE_EXPORT MMPObject : public QObject
-{
+class MMPFILE_EXPORT MMPObject : public QObject {
   Q_OBJECT
+
 public:
   explicit MMPObject(QObject *parent = nullptr);
   explicit MMPObject(QStringList fileNames, QObject *parent = nullptr);
@@ -29,7 +31,7 @@ public:
    * и в них формируется. Пока все происходит синхронно
    * @brief channels
    */
-  ChannelArray* channels;
+  MChannelArray* channels;
 
   /**
    * Возвращает канал по его имени
@@ -37,7 +39,7 @@ public:
    * @param name
    * @return
    */
-  ChannelBlock* operator[](QString name);
+  MChannelBlock* operator[](QString name);
 
   /**
    * Проверяет наличие канала с именем name

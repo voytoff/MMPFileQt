@@ -1,15 +1,16 @@
 #include "mmpobject.h"
 #include "datablock.h"
 #include "lib.h"
+#include "mlib.h"
 
 #include <QDir>
 #include <QStringList>
 #include <QTextStream>
-#include <qregularexpression.h>
+#include <QRegularExpression>
 
 MMPObject::MMPObject(QObject *parent) :
   QObject{parent}
-  , channels(new ChannelArray())
+  , channels(new MChannelArray())
   , files(new QList<FileItem*>()) { }
 
 MMPObject::MMPObject(QStringList fileNames, QObject *parent) : MMPObject(parent) {
@@ -18,33 +19,34 @@ MMPObject::MMPObject(QStringList fileNames, QObject *parent) : MMPObject(parent)
   // Корневой каталог
   parentDir = QFileInfo(fileNames.first()).absolutePath();
   // Есть prm в списке ?
-  auto pattern = QString("%1%2").arg(Ext_info, "$");
+  auto pattern = QString("%1%2").arg(ext_prm, "$");
   QStringList results = fileNames.filter(QRegularExpression(pattern));
   if (results.length() >= 0)
     infoFileName = results.first();
   else {
     // В списке не нашли, ищем в каталоге
     QDir directory(parentDir);
-    QStringList filter(Pattern_info);
+    QStringList filter(pattern_prm);
     QStringList files = directory.entryList(filter, QDir::Files);
     if (files.length() == 0) return;
     infoFileName = files.first();
   }
 
-  pattern = QString("%1%2").arg(Ext, "$");
+  pattern = QString("%1%2").arg(ext_mmp, "$");
   QStringList mmps = fileNames.filter(QRegularExpression(pattern));
   if (mmps.length() == 0) {
     QDir directory(parentDir);
-    QStringList filter(Pattern);
+    QStringList filter(pattern_mmp);
     mmps = directory.entryList(filter, QDir::Files);
     if (mmps.length() == 0) return;
+    mmps.replaceInStrings(QRegularExpression("^"), directory.absolutePath() + "/");
   }
 
   loadCore(mmps);
 }
 
 void MMPObject::loadCore(QStringList mmpFiles) {
-  QStringList lines;
+  //QStringList lines;
   QFile file(infoFileName);
   // 122
   // ДПБГ1,2,кгс/см^2,кр1_MR-227_сл1.mmp,0
@@ -64,7 +66,7 @@ void MMPObject::loadCore(QStringList mmpFiles) {
       auto n = lib::endsWith(mmpFiles, fileName);
       if (n < 0) continue;
       fileName = mmpFiles.at(n);
-      auto channelBlock = new ChannelBlock();
+      auto channelBlock = new MChannelBlock();
       channelBlock->channelID = index++;
       channelBlock->name = channelName;
       channelBlock->unit = unit;
@@ -78,7 +80,7 @@ void MMPObject::loadCore(QStringList mmpFiles) {
 }
 
 FileItem *MMPObject::appendFile(QString fileName) {
-  auto index = lib::indexOf(*files, fileName);
+  auto index = mlib::indexOf(*files, fileName);
   if (index > -1) return files->at(index);
   FileItem *file = new FileItem(fileName, files->length(), channels, true);
   files->append(file);
@@ -104,7 +106,7 @@ void MMPObject::close() {
   for (FileItem *file : *files) {
     file->file()->close();
   }
-  foreach (ChannelBlock* channel, *channels) {
+  foreach (MChannelBlock* channel, *channels) {
     foreach (DataBlock* dataBlock, *channel->dataBlockArray) {
       //dataBlock->payload.clear();
       //dataBlock->data().clear();

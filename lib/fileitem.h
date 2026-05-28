@@ -1,7 +1,7 @@
 #ifndef FILEITEM_H
 #define FILEITEM_H
 
-#include "channelarray.h"
+#include "mchannelarray.h"
 #include "file.h"
 #include <QObject>
 
@@ -10,8 +10,8 @@ class FileItem : public QObject
   Q_OBJECT
 public:
   explicit FileItem(QObject *parent = nullptr);
-  explicit FileItem(ChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
-  explicit FileItem(QString fileName, int index, ChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
+  explicit FileItem(MChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
+  explicit FileItem(QString fileName, int index, MChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
 
   QString blockHeader;
 
@@ -57,7 +57,7 @@ public:
    * Массив блоков информации по каналам. Пробрасывается в FileItem для загрузки данных из файлов
    * @brief channelBlockArray
    */
-  ChannelArray* channelBlockArray;
+  MChannelArray* channelBlockArray;
 
   /**
    * Имя файла данных acd2

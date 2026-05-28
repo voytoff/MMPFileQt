@@ -45,7 +45,7 @@ void MMPTest::test_case1() {
 
 QVector<QString> MMPTest::getFiles(const QString &path) {
   QVector<QString> result;
-  QDirIterator it(path, QStringList() << Pattern << Pattern_info, QDir::Files, QDirIterator::Subdirectories);
+  QDirIterator it(path, QStringList() << pattern_mmp << pattern_prm, QDir::Files, QDirIterator::Subdirectories);
   while (it.hasNext())
     result.append(it.next());
   return result;

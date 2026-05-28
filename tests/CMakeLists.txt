@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Test)
 qt_standard_project_setup(REQUIRES 6.5)
 
+set(GLOBALLIBDIR "../../GlobalLibQt")
+include_directories(${GLOBALLIBDIR})
+#add_subdirectory(${GLOBALLIBDIR} GlobalLib)
+
 include_directories(../lib)
 
 set(CMAKE_AUTOMOC ON)
@@ -19,6 +23,5 @@ qt_add_executable(tst_MMPFile
 #    WIN32_EXECUTABLE FALSE
 #)
 
-target_link_libraries(tst_MMPFile PRIVATE Qt6::Test MMPFile)
-
+target_link_libraries(tst_MMPFile PRIVATE Qt6::Test MMPFile)# GlobalLib)
 add_test(NAME MMPTest COMMAND MMPTest)
