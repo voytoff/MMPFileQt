@@ -3,7 +3,7 @@
 
 #include "MMPFile_global.h"
 #include "mchannelarray.h"
-#include "fileitem.h"
+#include "mfileitem.h"
 
 #include <QObject>
 #include <QList>
@@ -23,7 +23,7 @@ public:
    * Массив файлов обработки acd2
    * @brief files
    */
-  QList<FileItem*>* files;
+  QList<MFileItem*>* files;
 
   /**
    * Массив блоков информации по каналам.
@@ -51,7 +51,7 @@ public:
 
 public slots:
   void loadCore(QStringList mmpFiles);
-  FileItem *appendFile(QString fileName);
+  MFileItem *appendFile(QString fileName);
   void load();
   void close();
 

@@ -2,6 +2,7 @@
 #define MCHANNELBLOCK_H
 
 #include "MMPFile_global.h"
+#include "mfileitem.h"
 #include "datablock.h"
 #include "datablockarray.h"
 #include "parameter.h"
@@ -9,7 +10,6 @@
 #include <QHash>
 #include <QList>
 
-class FileItem;
 class MMPFILE_EXPORT MChannelBlock : public QObject
 {
   Q_OBJECT
@@ -47,15 +47,7 @@ public:
    */
   QString unit;
 
-  double frequency;
-
-  /**
-   * Массив считанных блоков данных, соответствующих этому каналу
-   * @brief dataBlockArray
-   */
-  QList<DataBlock*>* dataBlockArray;
-
-  FileItem *fileItem;
+  MFileItem *fileItem;
 
   DataBlockArray* array(int persecond);
 //private:
@@ -64,6 +56,7 @@ public:
    * @brief data
    * @return
    */
+  QList<Parameter*> _data;
   QList<Parameter*> data();
   QHash<int, DataBlockArray*> finalData;
 

@@ -11,7 +11,7 @@
 MMPObject::MMPObject(QObject *parent) :
   QObject{parent}
   , channels(new MChannelArray())
-  , files(new QList<FileItem*>()) { }
+  , files(new QList<MFileItem*>()) { }
 
 MMPObject::MMPObject(QStringList fileNames, QObject *parent) : MMPObject(parent) {
   if (fileNames.length() == 0) return;
@@ -79,38 +79,39 @@ void MMPObject::loadCore(QStringList mmpFiles) {
   }
 }
 
-FileItem *MMPObject::appendFile(QString fileName) {
+MFileItem *MMPObject::appendFile(QString fileName) {
   auto index = mlib::indexOf(*files, fileName);
   if (index > -1) return files->at(index);
-  FileItem *file = new FileItem(fileName, files->length(), channels, true);
+  MFileItem *file = new MFileItem(fileName, files->length(), channels, true);
   files->append(file);
-  connect(file, &FileItem::channelBlockRead, this, [this](QString fileName, int channelID, QString name) {
+  connect(file, &MFileItem::channelBlockRead, this, [this](QString fileName, int channelID, QString name) {
     emit channelBlockRead(fileName, channelID, name);
   });
-  connect(file, &FileItem::dataBlockRead, this, [this](QString fileName, int channelID, int blockID, int size) {
+  connect(file, &MFileItem::dataBlockRead, this, [this](QString fileName, int channelID, int blockID, int size) {
     emit dataBlockRead(fileName, channelID, blockID, size);
   });
-  connect(file, &FileItem::fileLoaded, this, [this](int index, QString fileName) {
+  connect(file, &MFileItem::fileLoaded, this, [this](int index, QString fileName) {
     emit fileLoaded(index, fileName);
   });
   return file;
 }
 
 void MMPObject::load() {
-  for (FileItem *file : *files) {
+  for (MFileItem *file : *files) {
     file->loadData();
   }
 }
 
 void MMPObject::close() {
-  for (FileItem *file : *files) {
+  for (MFileItem *file : *files) {
     file->file()->close();
   }
   foreach (MChannelBlock* channel, *channels) {
-    foreach (DataBlock* dataBlock, *channel->dataBlockArray) {
-      //dataBlock->payload.clear();
-      //dataBlock->data().clear();
+    foreach (MFileItem* fileItem, *files) {
+      fileItem->payload.clear();
+      fileItem->payload = nullptr;
     }
+
   }
   channels->clear();
 }

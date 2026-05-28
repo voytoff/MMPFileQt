@@ -1,37 +1,31 @@
-#ifndef FILEITEM_H
-#define FILEITEM_H
+#ifndef MFILEITEM_H
+#define MFILEITEM_H
 
-#include "mchannelarray.h"
 #include "file.h"
 #include <QObject>
 
-class FileItem : public QObject
+class MChannelArray;
+class MFileItem : public QObject
 {
   Q_OBJECT
 public:
-  explicit FileItem(QObject *parent = nullptr);
-  explicit FileItem(MChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
-  explicit FileItem(QString fileName, int index, MChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
+  explicit MFileItem(QObject *parent = nullptr);
+  explicit MFileItem(MChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
+  explicit MFileItem(QString fileName, int index, MChannelArray* channelBlockArray, bool deferred = true, QObject *parent = nullptr);
 
   QString blockHeader;
 
   /**
    * Количество параметров в блоке файла
-   * @brief blockLength
+   * @brief blockSize
    */
-  int blockLength;
+  int blockSize;
 
   /**
    * Частота дискретизации данных в блоке Гц
    * @brief frequency
    */
   double frequency;
-
-  /**
-   * Указатель на данные в файле
-   * @brief filePosition
-   */
-  long filePosition;
 
   /**
    * Номер файла в списке
@@ -46,6 +40,12 @@ public:
    * @brief deferred
    */
   bool deferred;
+
+  /**
+   * Указатель на данные в файле
+   * @brief filePosition
+   */
+  long filePosition;
 
   /**
    * Данные как есть в файле без преобразований
@@ -77,18 +77,14 @@ private:
   File* _file = nullptr;
 
 public slots:
-  /**
-   * Загружает заголовки файла
-   * У MMP файлов заголовков нет, пропускаем этот этап
-   * @brief loadInfo
-   */
-  //void loadInfo();
 
   /**
    * Загружает данные файла
    * @brief loadData
    */
   void loadData();
+
+  QByteArray data();
 
 signals:
   /**
@@ -108,4 +104,4 @@ signals:
   void fileLoaded(int index, QString fileName); // Signal declaration
 };
 
-#endif // FILEITEM_H
+#endif // MFILEITEM_H

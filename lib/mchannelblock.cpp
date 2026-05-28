@@ -3,10 +3,26 @@
 
 MChannelBlock::MChannelBlock(QObject *parent)
   : QObject{parent}
-  , dataBlockArray(new QList<DataBlock*>()) {}
+  //, dataBlockArray(new QList<DataBlock*>())
+{}
 
 QList<Parameter *> MChannelBlock::data() {
-  return {};
+  auto buffer = fileItem->data();
+  if (_data.length() == 0 && buffer.length() > 0) {
+    int pos = 0;
+    double index = 0;
+    int persecond = fileItem->frequency;
+    int blockLength = fileItem->blockSize * 4;
+    while (pos < buffer.length()) {
+      auto time = lib::toOleTime(buffer.mid(pos, 8)); pos += 8;
+      auto n = pos + blockID * 4;
+      auto value = lib::toFloat(buffer.mid(n, 4));
+      pos += blockLength;
+      Parameter *p = new Parameter(lib::increment(persecond, index), time, value);
+      _data.append(p);
+    }
+  }
+  return _data;
 }
 
 DataBlockArray *MChannelBlock::array(int persecond) {
@@ -15,7 +31,8 @@ DataBlockArray *MChannelBlock::array(int persecond) {
     return finalData.value(persecond);
   if (frequencies.contains(persecond)) {
     QVector<Parameter*> array = data();
-    double f = frequency;
+    if (array.length() == 0) return result;
+    double f = fileItem->frequency;
     result = new DataBlockArray(this->name, f, persecond);
     double temp = f / persecond;      // Ищем ближайший делитель
     int mod = (int)std::round(temp);  // он же шаг в буфере даных

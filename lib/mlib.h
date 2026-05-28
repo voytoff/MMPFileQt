@@ -1,13 +1,13 @@
 #ifndef MLIB_H
 #define MLIB_H
 
-#include "fileitem.h"
+#include "mfileitem.h"
 #include <QStringList>
 #include <QString>
 #include <QList>
 
 namespace mlib {
-int indexOf(QList<FileItem*> list, QString fileName);
+int indexOf(QList<MFileItem*> list, QString fileName);
 };
 
 #endif // MLIB_H

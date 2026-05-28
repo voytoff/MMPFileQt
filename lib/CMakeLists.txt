@@ -22,7 +22,7 @@ add_library(MMPFile SHARED
   mmpfile.cpp
   mmpfile.h
   mmpobject.h mmpobject.cpp
-  fileitem.h fileitem.cpp
+  mfileitem.h mfileitem.cpp
   mchannelarray.h mchannelarray.cpp
   mchannelblock.h mchannelblock.cpp
 
