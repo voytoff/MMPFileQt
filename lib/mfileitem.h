@@ -1,12 +1,12 @@
 #ifndef MFILEITEM_H
 #define MFILEITEM_H
 
+#include "MMPFile_global.h"
 #include "file.h"
 #include <QObject>
 
 class MChannelArray;
-class MFileItem : public QObject
-{
+class MMPFILE_EXPORT MFileItem : public QObject {
   Q_OBJECT
 public:
   explicit MFileItem(QObject *parent = nullptr);
@@ -102,6 +102,9 @@ signals:
    * @brief fileLoaded
    */
   void fileLoaded(int index, QString fileName); // Signal declaration
+
+  void progress(int pos, int max);
+  void dataReceived(int count);
 };
 
 #endif // MFILEITEM_H

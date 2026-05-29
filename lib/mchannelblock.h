@@ -3,15 +3,13 @@
 
 #include "MMPFile_global.h"
 #include "mfileitem.h"
-#include "datablock.h"
 #include "datablockarray.h"
 #include "parameter.h"
 #include <QObject>
 #include <QHash>
 #include <QList>
 
-class MMPFILE_EXPORT MChannelBlock : public QObject
-{
+class MMPFILE_EXPORT MChannelBlock : public QObject {
   Q_OBJECT
 public:
   MChannelBlock(QObject *parent = nullptr);
@@ -47,20 +45,27 @@ public:
    */
   QString unit;
 
+  /**
+   * Файл, связанный с этим каналом
+   * @brief fileItem
+   */
   MFileItem *fileItem;
 
-  DataBlockArray* array(int persecond);
-//private:
   /**
    * Массив с данными этого канала. Формируется из данных всех блоков
    * @brief data
    * @return
    */
-  QList<Parameter*> _data;
   QList<Parameter*> data();
+  DataBlockArray* array(int persecond);
+
+private:
+  QList<Parameter*> _data;
   QHash<int, DataBlockArray*> finalData;
 
 signals:
+  void progress(int pos, int max);
+  void dataReceived(int count);
 };
 
 #endif // MCHANNELBLOCK_H

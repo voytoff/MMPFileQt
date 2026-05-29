@@ -33,7 +33,7 @@ DataBlockArray *MChannelBlock::array(int persecond) {
     QVector<Parameter*> array = data();
     if (array.length() == 0) return result;
     double f = fileItem->frequency;
-    result = new DataBlockArray(this->name, f, persecond);
+    result = new DataBlockArray(this->name, f, persecond, unit);
     double temp = f / persecond;      // Ищем ближайший делитель
     int mod = (int)std::round(temp);  // он же шаг в буфере даных
     if (mod == 0) mod = 1;            // несущая частота меньше запрошенной
