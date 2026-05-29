@@ -13,6 +13,7 @@ QList<Parameter *> MChannelBlock::data() {
     double index = 0;
     int persecond = fileItem->frequency;
     int blockLength = fileItem->blockSize * 4;
+    int allLength = buffer.length() / (blockLength + 8/*дата*/);
     while (pos < buffer.length()) {
       auto time = lib::toOleTime(buffer.mid(pos, 8)); pos += 8;
       auto n = pos + blockID * 4;
@@ -20,7 +21,10 @@ QList<Parameter *> MChannelBlock::data() {
       pos += blockLength;
       Parameter *p = new Parameter(lib::increment(persecond, index), time, value);
       _data.append(p);
+      if (std::fmod(index, 100) == 0)
+        emit fileItem->progress((int)index, allLength);
     }
+    emit dataReceived(index * persecond);
   }
   return _data;
 }
@@ -32,14 +36,14 @@ DataBlockArray *MChannelBlock::array(int persecond) {
   if (frequencies.contains(persecond)) {
     QVector<Parameter*> array = data();
     if (array.length() == 0) return result;
-    double f = fileItem->frequency;
-    result = new DataBlockArray(this->name, f, persecond, unit);
-    double temp = f / persecond;      // Ищем ближайший делитель
+    double frequency = fileItem->frequency;
+    result = new DataBlockArray(this->name, frequency, persecond, unit);
+    double temp = frequency / persecond;      // Ищем ближайший делитель
     int mod = (int)std::round(temp);  // он же шаг в буфере даных
     if (mod == 0) mod = 1;            // несущая частота меньше запрошенной
     auto repeat = (int)(1 / temp);    // число повторов значения, если частота меньше запрошенной
     if (repeat == 0) repeat = 1;
-    auto deltaTime = 1000 / std::min((int)f, persecond); // шаг времени
+    auto deltaTime = 1000 / std::min((int)frequency, persecond); // шаг времени
     double index = 0;
     int position = 0;
     for (int n = 0; n < array.length(); n += mod) {

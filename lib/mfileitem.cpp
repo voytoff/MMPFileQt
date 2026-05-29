@@ -35,5 +35,5 @@ QByteArray MFileItem::data() {
     payload = file()->readAll();
   }
   return payload;
-} // loadData
+}
 
